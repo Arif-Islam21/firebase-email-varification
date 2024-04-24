@@ -12,6 +12,9 @@ const Heading = () => {
       <li>
         <NavLink to="/register">Register</NavLink>
       </li>
+      <li>
+        <NavLink to="/HeroRegister">Hero Register</NavLink>
+      </li>
     </>
   );
 
