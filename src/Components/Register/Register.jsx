@@ -5,20 +5,24 @@ import { useState } from "react";
 const Register = () => {
   const [registerError, setRegisterError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    if (password.length < 6) {
-      setRegisterError("Password must be at least 6 charecter");
-      return;
-    }
-
     // reset error
     setRegisterError("");
     setSuccess("");
+
+    if (password.length < 6) {
+      setRegisterError("Password must be at least 6 charecter");
+      return;
+    } else if (!/[A-Z]/.test(password)) {
+      setRegisterError("Your Password Should have at least one upper case");
+      return;
+    }
 
     // Create user with email and password
     createUserWithEmailAndPassword(auth, email, password)
@@ -46,13 +50,21 @@ const Register = () => {
             required
           />
           <br />
-          <input
-            placeholder="Password"
-            className="mb-4 w-3/4 py-2 px-4"
-            type="password"
-            name="password"
-            id=""
-          />
+          <div className="relative ">
+            <input
+              placeholder="Password"
+              className="mb-4 w-3/4 py-2 px-4"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              id=""
+            />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-44"
+            >
+              show
+            </span>
+          </div>
           <br />
           <input
             className="mb-4 w-3/4 btn btn-secondary"
