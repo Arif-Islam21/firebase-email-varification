@@ -11,6 +11,8 @@ const Register = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const accepted = e.target.terms.checked;
+    console.log(accepted);
 
     // reset error
     setRegisterError("");
@@ -22,6 +24,8 @@ const Register = () => {
     } else if (!/[A-Z]/.test(password)) {
       setRegisterError("Your Password Should have at least one upper case");
       return;
+    } else if (!accepted) {
+      setRegisterError("Please Accept Our Terms And Condition");
     }
 
     // Create user with email and password
@@ -62,8 +66,15 @@ const Register = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-44"
             >
-              show
+              {showPassword ? "Hide" : "Show"}
             </span>
+          </div>
+          <br />
+          <div>
+            <input type="checkbox" name="terms" id="terms" />
+            <label className="ml-2" htmlFor="terms">
+              Please accept our terms and condition
+            </label>
           </div>
           <br />
           <input
