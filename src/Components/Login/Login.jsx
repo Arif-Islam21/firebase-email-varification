@@ -1,21 +1,27 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../Firebasae/Firebase.config";
+import { useState } from "react";
 
 const Login = () => {
+  const [loginError, setLoginError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    setLoginError("");
+    setSuccess("");
 
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         console.log(result.user);
+        setSuccess("User Loged in Successfully");
       })
       .catch((error) => {
         console.error(error);
+        setLoginError(error.message);
       });
-
-    console.log(email, password);
   };
 
   return (
@@ -64,6 +70,11 @@ const Login = () => {
               <button className="btn btn-primary">Login</button>
             </div>
           </form>
+          {loginError ? (
+            <p className="text-red-600">{loginError}</p>
+          ) : (
+            <p className="text-green-600">{success}</p>
+          )}
         </div>
       </div>
     </div>
