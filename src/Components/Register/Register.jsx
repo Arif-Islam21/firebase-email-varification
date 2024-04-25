@@ -1,4 +1,7 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import auth from "../../Firebasae/Firebase.config";
 import { useState } from "react";
 
@@ -33,6 +36,7 @@ const Register = () => {
       .then((result) => {
         console.log(result.user);
         setSuccess("User Created Successfully");
+        sendEmailVerification(result.user);
       })
       .catch((error) => {
         console.error(error);
